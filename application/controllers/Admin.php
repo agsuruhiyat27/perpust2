@@ -118,7 +118,7 @@ class Admin extends CI_Controller
  		$where = array('id_buku' => $id);
  		$this->M_perpus->delete_data($where,'buku');
  		redirect(base_url().'admin/buku');
-	 }
+	}
 
 	 function edit_buku($id){
         $where = array('id_buku' =>$id);
@@ -273,6 +273,14 @@ class Admin extends CI_Controller
 			$this->load->view('admin/footer');
 		}
 	}
+
+
+	function hapus_anggota($id){
+		$where = array('id_anggota' => $id);
+		$this->M_perpus->delete_data($where,'anggota');
+		redirect(base_url().'admin/anggota');
+   }
+
 	function peminjaman(){
 		$data['peminjaman'] = $this->db->query("SELECT * FROM transaksi T, buku B, anggota A WHERE T.id_buku=B.id_buku and T.id_anggota=A.id_anggota")->result();
 		$this->load->view('admin/header');
@@ -339,50 +347,45 @@ class Admin extends CI_Controller
 			$this->M_perpus->update_data('buku',$data2,$ww);
 			$this->M_perpus->delete_data($w,'transaksi');
 			redirect(base_url().'admin/peminjaman');
-			}
-			function transaksi_selesai($id){
+		}
+		function transaksi_selesai($id){
 			$data['buku'] = $this->M_perpus->get_data('buku')->result();
 			$data['anggota'] = $this->M_perpus->get_data('anggota')->result();
-			$data['peminjaman'] = $this->db->query("select * from peminjaman p,
-			detail_pinjam d,anggota a, buku b where t.id_buku = b.id_buku and
-			t.id_anggota=a.id_anggota and t.id_pinjam='$id'")->result();
+			$data['peminjaman'] = $this->db->query("select * from anggota a, buku b, transaksi t where t.id_buku = b.id_buku and t.id_anggota=a.id_anggota and t.id_pinjam='$id'")->result();
 			$this->load->view('admin/header');
 			$this->load->view('admin/transaksi_selesai',$data);
 			$this->load->view('admin/footer');
-			}
-			function transaksi_selesai_act(){
+		}
+		function transaksi_selesai_act(){
 			$id = $this->input->post('id');
 			$tgl_dikembalikan = $this->input->post('tgl_dikembalikan');
 			$tgl_kembali = $this->input->post('tgl_kembali');
 			$buku = $this->input->post('buku');
 			$denda = $this->input->post('denda');
-			$this->form_validation->set_rules('tgl_dikembalikan','Tanggal
-			dikembalkan','required');
+			$this->form_validation->set_rules('tgl_dikembalikan','Tanggal dikembalkan','required');
 			if($this->form_validation->run() !=false){
-			//hitung selisih hari
-			$batas_kembali = strtotime($tgl_kembali);
-			$dikembalikan = strtotime($tgl_dikembalikan);
-			$selisih = abs(($batas_kembali - $dikembalikan)/(60*60*24));
-			$total_denda = $denda*$selisih;
-			//update status Peminjaman
-			$data = array('status_peminjaman' => '1','total_denda' =>
-			$total_denda,'tgl_pengembalian' => $tgl_dikembalikan,'status_pengembalian' => '1');
-			$w = array('id_pinjam' =>$id);
-			$this->M_perpus->update_data('peminjaman',$data,$w);
-			//update status Buku
-			$data2 = array('status_buku' => '1');
-			$w2 = array('id_buku' => $buku);
-			$this->M_perpus->update_data('buku',$data2,$w2);
-			redirect(base_url().'admin/peminjaman');
+				//hitung selisih hari
+				$batas_kembali = strtotime($tgl_kembali);
+				$dikembalikan = strtotime($tgl_dikembalikan);
+				$selisih = abs(($batas_kembali - $dikembalikan)/(60*60*24));
+				$total_denda = $denda*$selisih;
+				//update status Peminjaman
+				$data = array('status_peminjaman' => '1','total_denda' =>
+				$total_denda,'tgl_pengembalian' => $tgl_dikembalikan,'status_pengembalian' => '1');
+				$w = array('id_pinjam' =>$id);
+				$this->M_perpus->update_data('transaksi',$data,$w);
+				//update status Buku
+				$data2 = array('status_buku' => '1');
+				$w2 = array('id_buku' => $buku);
+				$this->M_perpus->update_data('buku',$data2,$w2);
+				redirect(base_url().'admin/peminjaman');
 			}else{
-			$data['buku'] = $this->M_perpus->get_data('buku')->result();
-			$data['anggota'] = $this->M_perpus->get_data('anggota')->result();
-			$data['peminjaman'] = $this->db->query("select * from peminjaman p,
-			anggota a, detail_pinjam d, buku b where p.id_anggota = a.id_anggota and
-			p.id_pinjam=d.id_pinjam and d.id_buku=b.id_buku and p.id_pinjam='$id'")->result();
-			$this->load->view('admin/header');
-			$this->load->view('admin/transaksi_selesai',$data);
-			$this->load->view('admin/footer');
+				$data['buku'] = $this->M_perpus->get_data('buku')->result();
+				$data['anggota'] = $this->M_perpus->get_data('anggota')->result();
+				$data['peminjaman'] = $this->db->query("select * from peminjaman p,anggota a, detail_pinjam d, buku b where p.id_anggota = a.id_anggota and p.id_pinjam=d.id_pinjam and d.id_buku=b.id_buku and p.id_pinjam='$id'")->result();
+				$this->load->view('admin/header');
+				$this->load->view('admin/transaksi_selesai',$data);
+				$this->load->view('admin/footer');
 			}
 		}
  }

@@ -1,55 +1,67 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard - Aplikasi Perpustakaan</title>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/css/bootstrap.css' ?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/datatable/datatables.css' ?>">
-    <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'; ?>"></script>
-    <script type="text/javascript" src="<?php echo base_url().'assets/js/bootstrap.js'; ?>"></script>
-    <script type="text/javascript" src="<?php echo base_url().'assets/datatable/jquery.datatables.js'; ?>"></script>
-    <script type="text/javascript" src="<?php echo base_url().'assets/datatable/datatables.js'; ?>"></script>
-  </head>
-  <body>
-    <nav class="navbar navbar-default">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-togglecollapsed" data-toggle="collapse" data-target="#bs-example-navbarcollapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="<?php echo base_url().'admin'; ?>"Perpustakaan</a>
-        </div>
+<html lang="en">
 
-        <div class="collapse navbar-collapse" id="bs-examplenavbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="<?php echo base_url().'admin'; ?>"><span class="glyphicon glyphicon-home"></span>Dashboard<span class="sronly">(current)</span></a></li>
-            <li><a href="<?php echo base_url().'admin/buku'; ?>"><span class="glyphicon glyphicon-folder-open"></span>Data Buku</a></li>
-            <li><a href="<?php echo base_url().'admin/anggota'; ?>"><span class="glyphicon glyphicon-user"></span>Data Anggota</a></li>
-            <li><a href="<?php echo base_url().'admin/peminjaman'; ?>"><span class="glyphicon glyphicon-sort"></span>Transaksi Peminjaman</a></li>
-            <li class="dropdown"><a href="<?php echo base_url().'#'; ?>" class="dropdown-toggle"
-              data-toggle="dropdown" role="button" aria-haspopup="true" ariaexpanded="false">
-              <span class="glyphicon glyphicon-list-alt"></span>Laporan<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="<?php echo base_url().'admin/cetak_laporan_buku' ?>">
-              <i class="glyphicon glyphicon-lock"></i>Laporan Data Buku</a></li>
-             <li><a href="<?php echo base_url().'admin/cetak_laporan_anggota' ?>">
-              <i class="glyphicon glyphicon-lock"></i>Laporan Data Anggota</a></li>
-             <li><a href="<?php echo base_url().'admin/laporan_transaksi' ?>">
-              <i class="glyphicon glyphicon-lock"></i>Laporan Data Transaksi</a></li>
-            </ul>
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="<?php echo base_url()?>assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="<?php echo base_url()?>assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Perpustakaan Agus Ruhiyat
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="<?php echo base_url()?>assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="<?php echo base_url()?>assets/demo/demo.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" />
+  <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+  
+</head>
+
+<body class="">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="white" data-image="<?php echo base_url()?>assets/img/sidebar-1.jpg">
+
+      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+          Creative Tim
+        </a></div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item <?php if($this->uri->segment(2) == null ) { echo "active"; } ?>" >
+            <a class="nav-link" href="<?php echo base_url() ?>admin">
+              <i class="material-icons">dashboard <?php echo $this->uri->segment(1); ?></i>
+              <p>Dashboard</p>
+            </a>
           </li>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="<?php echo base_url().'admin/logout'; ?>"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" ariaexpanded="false"><?php echo "Halo,<b>".$this->session->userdata('nama');?></b><span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="<?php echo base_url().'admin/ganti_password' ?>"><i class="glyphicon glyphicon-lock"></i>Ganti Password</a></li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+          <li class="nav-item <?php if($this->uri->segment(2) == 'buku' ) { echo "active"; } ?>">
+            <a class="nav-link" href="<?php echo base_url() ?>admin/buku">
+              <i class="material-icons">book</i>
+              <p>Data Buku</p>
+            </a>
+          </li>
+          <li class="nav-item <?php if($this->uri->segment(2) == 'anggota' ) { echo "active"; } ?>">
+            <a class="nav-link" href="<?php echo base_url() ?>admin/anggota">
+              <i class="material-icons">person</i>
+              <p>Data Anggota</p>
+            </a>
+          </li>
+          <li class="nav-item <?php if($this->uri->segment(2) == 'peminjaman' ) { echo "active"; } ?>">
+            <a class="nav-link" href="<?php echo base_url() ?>admin/peminjaman">
+              <i class="material-icons">library_books</i>
+              <p>Peminjaman</p>
+            </a>
+          </li>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url() ?>admin/logout">
+              <i class="material-icons">login</i>
+              <p>Logout</p>
+            </a>
+          </li>
+        </ul>
       </div>
-    </nav>
-  <div class="container">
+    </div>
