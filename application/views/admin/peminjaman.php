@@ -17,7 +17,9 @@
                             <th>Tgl. Dikembalikan</th>
                             <th>Total Denda</th>
                             <th>Status Buku</th>
+							<?php if($this->session->userdata('isAdmin') == 1):?>
                             <th>Status Pinjam</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -26,8 +28,8 @@
                     foreach ($peminjaman as $p) {?>
                         <tr>
                             <td><?php echo $no++; ?></td>
-                            <td><?php echo $p->id_anggota ?></td>
-                            <td><?php echo $p->id_pinjam ?></td>
+                            <td><?php echo $p->nama_anggota ?></td>
+                            <td><?php echo $p->judul_buku ?></td>
                             <td><?php echo date('d/m/Y',strtotime($p->tgl_pinjam)); ?></td>
                             <td><?php echo date('d/m/Y',strtotime($p->tgl_kembali)); ?></td>
                             <td><?php echo $p->total_denda; ?></td>
@@ -39,13 +41,15 @@
                             } ?>
                             </td>
                             <td><?php echo "Rp. ". number_format($p->total_denda)." ,-"; ?></td>
+
                             <td>
-                            <?php if($p->status_buku == "1"){
-                                echo "Selesai";
-                            }else{
-                                echo "-";
-                            } ?>
+                                <?php if($p->status_buku == "1"){
+                                    echo "Selesai";
+                                }else{
+                                    echo "-";
+                                } ?>
                             </td>
+                            <?php if($this->session->userdata('isAdmin') == 1):?>
                             <td>
                             <?php if($p->status_peminjaman == "1"){
                                 echo "-";
@@ -55,6 +59,8 @@
                                 <a class="btn btn-sm btn-danger" href="<?php echo base_url().'admin/transaksi_hapus/'.$p->id_pinjam; ?>"><span class="glyphicon glyphicon-remove"></span> Batalkan Transaksi </a>
                             <?php } ?>
                             </td>
+                            <?php endif; ?>
+
                         </tr>
                     <?php } ?>
                     </tbody>

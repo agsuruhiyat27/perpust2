@@ -17,7 +17,7 @@
   <link href="<?php echo base_url()?>assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="<?php echo base_url()?>assets/demo/demo.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" />
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" /> -->
   <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
   
 </head>
@@ -26,8 +26,9 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="<?php echo base_url()?>assets/img/sidebar-1.jpg">
 
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+      <div class="logo"><a href="<?php echo base_url()?>admin" class="simple-text logo-normal">
+        <img rel="icon" type="image/png" style="width:50px;" src="<?php echo base_url()?>assets/img/favicon.png"></img>
+          Perpustakaan
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
@@ -43,12 +44,14 @@
               <p>Data Buku</p>
             </a>
           </li>
+          <?php if($this->session->userdata('isAdmin') == 1):?>
           <li class="nav-item <?php if($this->uri->segment(2) == 'anggota' ) { echo "active"; } ?>">
             <a class="nav-link" href="<?php echo base_url() ?>admin/anggota">
               <i class="material-icons">person</i>
               <p>Data Anggota</p>
             </a>
           </li>
+          <?php endif;?>
           <li class="nav-item <?php if($this->uri->segment(2) == 'peminjaman' ) { echo "active"; } ?>">
             <a class="nav-link" href="<?php echo base_url() ?>admin/peminjaman">
               <i class="material-icons">library_books</i>

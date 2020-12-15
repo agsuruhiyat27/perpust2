@@ -5,6 +5,10 @@
 	<title>LOGIN - Aplikasi E-Library</title>
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url().'assets/css/bootstrap.css' ?>">
 	<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+
+	<script src='https://www.google.com/recaptcha/api.js?hl=en'></script>
+
+	<link rel="icon" type="image/png" href="<?php echo base_url()?>assets/img/favicon.png">
 	<style>
 		@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
@@ -121,55 +125,36 @@
 </head>
 <body>
 	<div class="col-nd-4 col-nd-offset-4" style="margin-top:50px">
-		<?php
-		if(isset($_GET['pesan'])){
-			if($_GET['pesan']=='gagal'){
-				echo "<div class='alert alert-danger alert-danger'>";
-				echo $this->session->flashdata('aleart');
-				echo "</div>";
-			} else if ($_GET['pesan']=='logout'){
-				if($this->session->flashdata())
-				{
-					echo "<div class='alert alert-danger alert-success'>";
-				echo $this->session->flashdata('Anda telah logout');
-				echo "</div";
-			    }
-			 } else if ($_GET['pesan']=='Belum login'){
-				if($this->session->flashdata())
-				{
-				 echo "<div class='alert alert-danger alert-primary'>";
-				 echo $this->session->flashdata('aleart');
-				 echo "</div>";
-			   }
-			}
-		    }else{
-		    	if($this->session->flashdata())
-				{
-				 echo "<div class='alert alert-danger alert-massage'>";
-				 echo $this->session->flashdata('aleart');
-				 echo "</div>";
-			   }
-		    }
-		    ?>
 		   <div class="login-page">
 			<div class="form">
 				<h3>Perpustakaan </h3>
-				<form class="register-form">
-					<input type="text" placeholder="name"/>
-					<input type="password" placeholder="password"/>
-					<input type="text" placeholder="email address"/>
-					<input type="text" placeholder="No Telepon"/>
-					<input type="text" placeholder="Alamat"/>
-					<select name="gender" id="" class="opti">
+
+		<?php
+				echo "<div class='alert alert-danger alert-danger'>";
+				echo $this->session->flashdata('alert');
+				echo "</div>";
+
+			?>
+			<br>
+				<form class="register-form" method="post" action="<?php echo base_url()?>welcome/register">
+					<input type="text" placeholder="name" required name="nama_anggota"/>
+					<input type="password" placeholder="password" required name="password"/>
+					<input type="text" placeholder="email address" required name="email"/>
+					<input type="text" placeholder="No Telepon" required name="no_telp"/>
+					<input type="text" placeholder="Alamat" required name="alamat"/>
+					<select name="gender" id="" class="opti" required>
 						<option>Gender</option>
 						<option value="Laki-Laki">Laki-Laki</option>
 						<option value="Perempuan">Perempuan</option>
 					</select>
+
+					<div class="g-recaptcha" data-sitekey="6LcX304UAAAAAPhlzVDWWXZ6XMUcen_EcM1NiyBz"></div>
+					<br>
 					<button>create</button>
 					<p class="message">Already registered? <a href="#">Sign In</a></p>
 				</form>
 				<form class="login-form" action="<?php echo base_url().'welcome/login'?>" method="post">
-				<input type="text" placeholder="username" name="username"/>
+				<input type="text" placeholder="username" name="username" autocomplete="off"/>
 				<input type="password" placeholder="password" name="password"/>
 				<button>login</button>
 				<p class="message">Not registered? <a href="#">Create an account</a></p>

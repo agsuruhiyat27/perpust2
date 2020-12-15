@@ -35,9 +35,9 @@
                     <input type="date" name="tgl_kembali" class="form-control">
                     <?php echo form_error('tgl_kembali'); ?>
                 </div>
-                <div class="form-group">
+                <div class="form-group" <?php if($this->session->userdata('isAdmin') == 0){ echo "style='display:none'"; }?>>
                     <label>Denda / Hari</label>
-                    <input type="text" name="denda" class="form-control">
+                    <input type="text" name="denda" class="form-control" <?php if($this->session->userdata('isAdmin') == 0){ echo "value='10000'"; }?>>
                     <?php echo form_error('denda'); ?>
                 </div>
                 <div class="form-group">

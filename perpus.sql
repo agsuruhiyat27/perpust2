@@ -1,73 +1,67 @@
--- phpMyAdmin SQL Dump
--- version 4.9.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Waktu pembuatan: 19 Okt 2020 pada 17.27
--- Versi server: 10.4.8-MariaDB
--- Versi PHP: 7.3.11
+/*
+Navicat MySQL Data Transfer
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
+Source Server         : localhost
+Source Server Version : 50505
+Source Host           : localhost:3306
+Source Database       : perpus
 
+Target Server Type    : MYSQL
+Target Server Version : 50505
+File Encoding         : 65001
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+Date: 2020-12-15 18:16:34
+*/
 
---
--- Database: `perpus`
---
+SET FOREIGN_KEY_CHECKS=0;
 
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `admin`
---
-
+-- ----------------------------
+-- Table structure for `admin`
+-- ----------------------------
+DROP TABLE IF EXISTS `admin`;
 CREATE TABLE `admin` (
-  `id_admin` int(5) NOT NULL,
+  `id_admin` int(5) NOT NULL AUTO_INCREMENT,
   `nama_admin` varchar(25) NOT NULL,
   `username` varchar(25) NOT NULL,
-  `password` varchar(35) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `password` varchar(35) NOT NULL,
+  PRIMARY KEY (`id_admin`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `admin`
---
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+INSERT INTO `admin` VALUES ('2', 'agus', 'admin', '21232f297a57a5a743894a0e4a801fc3');
+INSERT INTO `admin` VALUES ('6', 'agus', 'agus', 'fdf169558242ee051cca1479770ebac3');
 
-INSERT INTO `admin` (`id_admin`, `nama_admin`, `username`, `password`) VALUES
-(2, 'irpan', 'admin', '21232f297a57a5a743894a0e4a801fc3'),
-(3, 'iponk', 'irpan', '827ccb0eea8a706c4c34a16891f84e7b'),
-(6, 'agus', 'agus', 'fdf169558242ee051cca1479770ebac3');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `anggota`
---
-
+-- ----------------------------
+-- Table structure for `anggota`
+-- ----------------------------
+DROP TABLE IF EXISTS `anggota`;
 CREATE TABLE `anggota` (
-  `id_anggota` int(5) NOT NULL,
+  `id_anggota` int(5) NOT NULL AUTO_INCREMENT,
   `nama_anggota` varchar(45) NOT NULL,
   `gender` enum('Laki-Laki','Perempuan') NOT NULL,
   `no_telp` varchar(15) NOT NULL,
   `alamat` varchar(50) NOT NULL,
   `email` varchar(30) NOT NULL,
-  `password` varchar(35) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `password` varchar(35) NOT NULL,
+  `verify` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_anggota`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of anggota
+-- ----------------------------
+INSERT INTO `anggota` VALUES ('2', 'Agus', 'Laki-Laki', '08232t235', 'jakarta', 'ruhiyat.agus19@gmail.com', 'fdf169558242ee051cca1479770ebac3', '0');
+INSERT INTO `anggota` VALUES ('3', 'Anggota New', 'Laki-Laki', '08232t235', 'jakarta', 'Ade.nugraha@valbury.com', 'fdf169558242ee051cca1479770ebac3', '0');
+INSERT INTO `anggota` VALUES ('4', 'agus', 'Laki-Laki', '0823232323', 'jakarta', 'agusruhiyat27@gmail.com', 'fdf169558242ee051cca1479770ebac3', '1');
 
---
--- Struktur dari tabel `buku`
---
-
+-- ----------------------------
+-- Table structure for `buku`
+-- ----------------------------
+DROP TABLE IF EXISTS `buku`;
 CREATE TABLE `buku` (
-  `id_buku` int(5) NOT NULL,
+  `id_buku` int(5) NOT NULL AUTO_INCREMENT,
   `id_kategori` int(5) NOT NULL,
   `judul_buku` varchar(50) NOT NULL,
   `pengarang` varchar(35) NOT NULL,
@@ -78,22 +72,19 @@ CREATE TABLE `buku` (
   `lokasi` enum('Rak 1','Rak 2','Rak 3') NOT NULL,
   `gambar` varchar(255) NOT NULL,
   `tgl_input` date NOT NULL,
-  `status_buku` enum('1','0') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status_buku` enum('1','0') NOT NULL,
+  PRIMARY KEY (`id_buku`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `buku`
---
+-- ----------------------------
+-- Records of buku
+-- ----------------------------
+INSERT INTO `buku` VALUES ('6', '3', 'test 123', 'agus', '2020-12-19', 'Agus', '12312321', '2', 'Rak 1', 'gambar1607926517.png', '2020-12-15', '0');
 
-INSERT INTO `buku` (`id_buku`, `id_kategori`, `judul_buku`, `pengarang`, `thn_terbit`, `penerbit`, `isbn`, `jumlah_buku`, `lokasi`, `gambar`, `tgl_input`, `status_buku`) VALUES
-(5, 4, 'Test', 'Agus Ruhiyat', '2020-10-19', 'Agus Ruhiyat', '123456789876', 10, 'Rak 1', 'gambar1603120338.png', '2020-10-19', '1');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `detail_pinjam`
---
-
+-- ----------------------------
+-- Table structure for `detail_pinjam`
+-- ----------------------------
+DROP TABLE IF EXISTS `detail_pinjam`;
 CREATE TABLE `detail_pinjam` (
   `id_pinjam` int(5) NOT NULL,
   `id_buku` int(5) NOT NULL,
@@ -102,142 +93,72 @@ CREATE TABLE `detail_pinjam` (
   `status_kembali` enum('0','1') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of detail_pinjam
+-- ----------------------------
 
---
--- Struktur dari tabel `kategori`
---
-
+-- ----------------------------
+-- Table structure for `kategori`
+-- ----------------------------
+DROP TABLE IF EXISTS `kategori`;
 CREATE TABLE `kategori` (
-  `id_kategori` int(5) NOT NULL,
-  `nama_kategori` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_kategori` int(5) NOT NULL AUTO_INCREMENT,
+  `nama_kategori` varchar(45) NOT NULL,
+  PRIMARY KEY (`id_kategori`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `kategori`
---
+-- ----------------------------
+-- Records of kategori
+-- ----------------------------
+INSERT INTO `kategori` VALUES ('3', 'novel');
+INSERT INTO `kategori` VALUES ('4', 'pendidikan ');
 
-INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
-(3, 'novel'),
-(4, 'pendidikan ');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `peminjaman`
---
-
+-- ----------------------------
+-- Table structure for `peminjaman`
+-- ----------------------------
+DROP TABLE IF EXISTS `peminjaman`;
 CREATE TABLE `peminjaman` (
-  `id-pinjam` int(5) NOT NULL,
+  `id_pinjam` int(5) NOT NULL AUTO_INCREMENT,
   `tanggal` date NOT NULL,
   `id_anggota` int(5) NOT NULL,
   `tgl_pinjam` date NOT NULL,
-  `tgl-kembali` date NOT NULL,
-  `totaldenda` varchar(255) NOT NULL,
-  `status_pinjaman` varchar(255) NOT NULL
+  `tgl_pengembalian` date NOT NULL,
+  `total_denda` varchar(255) NOT NULL,
+  `status_peminjaman` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_pinjam`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
+-- ----------------------------
+-- Records of peminjaman
+-- ----------------------------
 
---
--- Struktur dari tabel `transaksi`
---
-
+-- ----------------------------
+-- Table structure for `transaksi`
+-- ----------------------------
+DROP TABLE IF EXISTS `transaksi`;
 CREATE TABLE `transaksi` (
-  `id_pinjam` int(11) NOT NULL,
+  `id_pinjam` int(11) NOT NULL AUTO_INCREMENT,
   `tgl_pencatatan` datetime NOT NULL,
   `id_anggota` int(4) NOT NULL,
   `id_buku` int(4) NOT NULL,
   `tgl_pinjam` date NOT NULL,
   `tgl_kembali` date NOT NULL,
   `denda` double NOT NULL,
-  `tgl_pengambalian` date NOT NULL,
+  `tgl_pengembalian` date NOT NULL,
   `total_denda` double NOT NULL,
   `status_pengembalian` varchar(15) NOT NULL,
-  `status_peminjaman` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status_peminjaman` varchar(25) NOT NULL,
+  PRIMARY KEY (`id_pinjam`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
---
--- Indexes for dumped tables
---
+-- ----------------------------
+-- Records of transaksi
+-- ----------------------------
+INSERT INTO `transaksi` VALUES ('3', '2020-12-14 13:28:24', '2', '6', '2020-12-14', '2020-12-16', '1000', '2020-12-17', '1000', '1', '1');
+INSERT INTO `transaksi` VALUES ('4', '2020-12-15 13:23:03', '4', '6', '2020-12-01', '2020-12-16', '10000', '0000-00-00', '0', '0', '0');
 
---
--- Indeks untuk tabel `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`);
-
---
--- Indeks untuk tabel `anggota`
---
-ALTER TABLE `anggota`
-  ADD PRIMARY KEY (`id_anggota`);
-
---
--- Indeks untuk tabel `buku`
---
-ALTER TABLE `buku`
-  ADD PRIMARY KEY (`id_buku`);
-
---
--- Indeks untuk tabel `kategori`
---
-ALTER TABLE `kategori`
-  ADD PRIMARY KEY (`id_kategori`);
-
---
--- Indeks untuk tabel `peminjaman`
---
-ALTER TABLE `peminjaman`
-  ADD PRIMARY KEY (`id-pinjam`);
-
---
--- Indeks untuk tabel `transaksi`
---
-ALTER TABLE `transaksi`
-  ADD PRIMARY KEY (`id_pinjam`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id_admin` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT untuk tabel `anggota`
---
-ALTER TABLE `anggota`
-  MODIFY `id_anggota` int(5) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `buku`
---
-ALTER TABLE `buku`
-  MODIFY `id_buku` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT untuk tabel `kategori`
---
-ALTER TABLE `kategori`
-  MODIFY `id_kategori` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT untuk tabel `peminjaman`
---
-ALTER TABLE `peminjaman`
-  MODIFY `id-pinjam` int(5) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `transaksi`
---
-ALTER TABLE `transaksi`
-  MODIFY `id_pinjam` int(11) NOT NULL AUTO_INCREMENT;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- ----------------------------
+-- View structure for `login`
+-- ----------------------------
+DROP VIEW IF EXISTS `login`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `login` AS select `admin`.`username` AS `username`,`admin`.`password` AS `password`,`admin`.`id_admin` AS `id_admin`,`admin`.`nama_admin` AS `nama_admin`,'1' AS `isadmin` from `admin` union select `anggota`.`email` AS `username`,`anggota`.`password` AS `password`,`anggota`.`id_anggota` AS `id_admin`,`anggota`.`nama_anggota` AS `nama_admin`,'0' AS `isadmin` from `anggota` where `anggota`.`verify` = 1 ;

@@ -15,11 +15,13 @@
             </div>
             <div class="card-footer">
               <div class="stats">
-                <a href="javascript:;">View Details</a>
+                <a href="<?php echo base_url()?>admin/buku">View Details</a>
               </div>
             </div>
           </div>
         </div>
+				<?php if($this->session->userdata('isAdmin') == 1):?>
+
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
@@ -31,11 +33,14 @@
             </div>
             <div class="card-footer">
               <div class="stats">
-                <a href="javascript:;">View Details</a>
+                <a href="<?php echo base_url()?>admin/anggota">View Details</a>
               </div>
             </div>
           </div>
         </div>
+
+        <?php endif;?>
+
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-danger card-header-icon">
@@ -43,11 +48,15 @@
                 <i class="material-icons">assignment_late</i>
               </div>
               <p class="card-category">Peminjaman belum selesai</p>
-              <h3 class="card-title"><?php echo $this->M_perpus->edit_data(array('status_peminjaman'=>0),'transaksi')->num_rows(); ?></h3>
+            <?php if($this->session->userdata('isAdmin') == 1):?>
+              <h3 class="card-title"><?php echo $this->M_perpus->edit_data(array('status_peminjaman'=>0,),'transaksi')->num_rows(); ?></h3>
+            <?php else: ?>
+              <h3 class="card-title"><?php echo $this->M_perpus->edit_data(array('status_peminjaman'=>0,'id_anggota'=>$this->session->userdata('id_admin')),'transaksi')->num_rows(); ?></h3>
+            <?php endif;?>
             </div>
             <div class="card-footer">
               <div class="stats">
-                <a href="javascript:;">View Details</a>
+                <a href="<?php echo base_url()?>admin/peminjaman">View Details</a>
               </div>
             </div>
           </div>
@@ -59,16 +68,23 @@
                 <i class="material-icons">assignment_turned_in</i>
               </div>
               <p class="card-category">Peminjaman Sudah Selesai</p>
+            <?php if($this->session->userdata('isAdmin') == 1):?>
               <h3 class="card-title"><?php echo $this->M_perpus->edit_data(array('status_peminjaman'=>1),'transaksi')->num_rows(); ?></h3>
+              <?php else: ?>
+                <h3 class="card-title"><?php echo $this->M_perpus->edit_data(array('status_peminjaman'=>1, 'id_anggota'=>$this->session->userdata('id_admin')),'transaksi')->num_rows(); ?></h3>
+            <?php endif;?>
+
             </div>
             <div class="card-footer">
               <div class="stats">
-                <a href="javascript:;">View Details</a>
+                <a href="<?php echo base_url()?>admin/peminjaman">View Details</a>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <?php if($this->session->userdata('isAdmin') == 1):?>
+
       <div class="row">
         <div class="col-lg-6 col-md-12">
           <div class="card">
@@ -131,6 +147,7 @@
           </div>
         </div>
       </div>
+      <?php endif; ?>
     </div>
   </div>
 </div>

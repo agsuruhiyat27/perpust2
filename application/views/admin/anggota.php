@@ -15,6 +15,7 @@
                             <th>Alamat</th>
                             <th>Email</th>
                             <th>Pilihan</th>
+                            <th>verify</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +30,17 @@
                             <td><?php echo $a->no_telp ?></td>
                             <td><?php echo $a->alamat ?></td>
                             <td><?php echo $a->email ?></td>
+                            <td>
+                                <?php if($a->verify == 0 ) : ?>
+                                    <span class="fa fa-times"></span>
+                                <?php else : ?>
+                                    <span class="fa fa-check"></span>
+                                <?php endif;?>
+                            </td>
                             <td nowrap="nowrap">
+                               <?php if($a->verify == 0 ) : ?>
+                                    <a class="btn btn-primary btn-xs" href="<?php echo base_url().'admin/verify_anggota/'.$a->id_anggota; ?>"><span class="fa fa-check"></span></a>
+                                <?php endif;?>
                                 <a class="btn btn-primary btn-xs" href="<?php echo base_url().'admin/edit_anggota/'.$a->id_anggota; ?>"><span class="fa fa-edit"></span></a>
                                 <a class="btn btn-warning btn-xs" href="<?php echo base_url().'admin/hapus_anggota/'.$a->id_anggota; ?>"><span class="fa fa-trash"></span></a>
                             </td>

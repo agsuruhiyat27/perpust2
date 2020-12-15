@@ -42,6 +42,9 @@
   <script src="<?php echo base_url() ?>assets/js/material-dashboard.js?v=2.1.2" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="<?php echo base_url() ?>assets/demo/demo.js"></script>
+  
+  <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -218,9 +221,57 @@
       // Javascript method's body can be found in assets/js/demos.js
       md.initDashboardPageCharts();
 
-      $('#datatable-buku').DataTable();
-      $('#datatable-anggota').DataTable();
-      $('#datatable-peminjaman').DataTable();
+      $('#datatable-buku').DataTable({
+
+        dom: 'Bfrtip',
+          buttons: [
+              {
+                  extend: 'print',className:'btn btn-warning',
+                  customize: function ( win ) {
+                      $(win.document.body)
+                          .css( 'font-size', '10pt' )
+
+                      $(win.document.body).find( 'table' )
+                          .addClass( 'compact' )
+                          .css( 'font-size', 'inherit' );
+                  }
+              }
+          ]
+      });
+      $('#datatable-anggota').DataTable({
+
+        dom: 'Bfrtip',
+          buttons: [
+              {
+                  extend: 'print',className:'btn btn-warning',
+                  customize: function ( win ) {
+                      $(win.document.body)
+                          .css( 'font-size', '10pt' )
+
+                      $(win.document.body).find( 'table' )
+                          .addClass( 'compact' )
+                          .css( 'font-size', 'inherit' );
+                  }
+              }
+          ]
+      });
+      $('#datatable-peminjaman').DataTable({
+
+        dom: 'Bfrtip',
+          buttons: [
+              {
+                  extend: 'print',className:'btn btn-warning',
+                  customize: function ( win ) {
+                      $(win.document.body)
+                          .css( 'font-size', '10pt' )
+
+                      $(win.document.body).find( 'table' )
+                          .addClass( 'compact' )
+                          .css( 'font-size', 'inherit' );
+                  }
+              }
+          ]
+      });
     });
   </script>
 </body>

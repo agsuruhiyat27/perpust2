@@ -224,7 +224,9 @@ class Admin extends CI_Controller
 			'no_telp' => $no_telp,
 			'alamat' => $alamat,
 			'email' => $email,
-			'password' => $password, );
+			'password' => $password,
+			'verify' => 0,
+			);
 			$this->M_perpus->insert_data($data,'anggota');
 			redirect(base_url().'admin/anggota');
 		}else{
@@ -281,8 +283,21 @@ class Admin extends CI_Controller
 		redirect(base_url().'admin/anggota');
    }
 
+	function verify_anggota($id){
+
+		$d = array('verify' =>'1');
+		$w = array('id_anggota' => $id);
+		$this->M_perpus->update_data('anggota',$d,$w);
+		redirect(base_url().'admin/anggota');
+   }
+
 	function peminjaman(){
-		$data['peminjaman'] = $this->db->query("SELECT * FROM transaksi T, buku B, anggota A WHERE T.id_buku=B.id_buku and T.id_anggota=A.id_anggota")->result();
+		if($this->session->userdata('isAdmin') == 1){
+			$data['peminjaman'] = $this->db->query("SELECT * FROM transaksi T, buku B, anggota A WHERE T.id_buku=B.id_buku and T.id_anggota=A.id_anggota")->result();
+		}else{
+			$id = $this->session->userdata('id_admin');
+			$data['peminjaman'] = $this->db->query("SELECT * FROM transaksi T, buku B, anggota A WHERE T.id_buku=B.id_buku and T.id_anggota=A.id_anggota AND t.id_anggota = '$id'")->result();
+		}
 		$this->load->view('admin/header');
 		$this->load->view('admin/peminjaman',$data);
 		$this->load->view('admin/footer');
@@ -291,7 +306,13 @@ class Admin extends CI_Controller
 	function tambah_peminjaman(){
 		$w = array('status_buku'=>'1');
 		$data['buku'] = $this->M_perpus->edit_data($w,'buku')->result();
-		$data['anggota'] = $this->M_perpus->get_data('anggota')->result();
+		if($this->session->userdata('isAdmin') == 1){
+			$data['anggota'] = $this->M_perpus->get_data('anggota')->result();
+		}else{
+			$x = array('id_anggota'=>$this->session->userdata('id_admin'));
+		}
+		$data['anggota'] = $this->M_perpus->edit_data($x,'anggota')->result();
+
 		$data['peminjaman'] = $this->M_perpus->get_data('transaksi')->result();
 		$this->load->view('admin/header');
 		$this->load->view('admin/tambah_peminjaman',$data);
